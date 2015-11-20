@@ -20,7 +20,7 @@ function displayMessage(msg) {
   $msgContainer.scrollTop = $msgContainer.scrollHeight;
 };
 
-var socket = io('http://localhost:3000');
+var socket = io(document.baseURI);
 socket.on('connected', function(data) {
   console.log(data);
 });

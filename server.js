@@ -27,7 +27,9 @@ io.on('connection', function(socket) {
 
   socket.on('messageClient', function(data) {
     console.log(data)
+    if (data.name && data.name.length > 1 && data.content && data.content.length < 100) {
     socket.broadcast.emit('messageServer', data);
+    }
   });
 });
 

@@ -2,6 +2,12 @@
 
 ## Commands
 
+
+• Install webpack globally
+```
+$ npm i -g webpack
+```
+
 • Install dependencies (in `./`)
 ```
 $ npm install

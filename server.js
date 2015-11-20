@@ -24,6 +24,11 @@ var io = socketio(app);
 io.on('connection', function(socket) {
   console.log('user connected');
   socket.emit('connected', {status: 'Welcome!!!!'});
+
+  socket.on('messageClient', function(data) {
+    console.log(data)
+    socket.broadcast.emit('messageServer', data);
+  });
 });
 
 

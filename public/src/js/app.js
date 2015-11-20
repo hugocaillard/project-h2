@@ -4,6 +4,22 @@ var $ = {
   }
 };
 
+var $msgContainer = $.sel('.messages');
+
+function displayMessage(msg) {
+  var $name = document.createElement('span')
+  $name.innerHTML = msg.name;
+  var $content = document.createElement('span');
+  $content.innerHTML = msg.content;
+
+  var $msg = document.createElement('div');
+  $msg.classList.add('message');
+  $msg.appendChild($name);
+  $msg.appendChild($content);
+  $msgContainer.appendChild($msg);
+  $msgContainer.scrollTop = $msgContainer.scrollHeight;
+};
+
 var socket = io('http://localhost:3000');
 socket.on('connected', function(data) {
   console.log(data);
@@ -21,8 +37,17 @@ $name.addEventListener('input', function() {
 
 $content.addEventListener('keypress', function(e) {
   if (e.keyCode === 13) {
-    console.log(this.value);
-
+    var message = {
+      name: name,
+      content: this.value
+    };
+    socket.emit('messageClient', message);
+    displayMessage(message);
     this.value = '';
   }
+});
+
+socket.on('messageServer', function(data) {
+  console.log(data);
+  displayMessage(data);
 });

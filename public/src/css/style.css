@@ -1,0 +1,56 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #222;
+  color: #dedada;
+}
+
+.container {
+  width: 560px;
+  margin: auto;
+}
+
+input {
+  padding: 4px 10px;
+  display: block;
+  color: #222;
+  outline: none;
+}
+  input + input {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+.messages {
+  height: 200px;
+  margin-bottom: 20px;
+  overflow-y: scroll;
+}
+
+.message {
+  margin: 4px;
+  padding: 6px;
+  border-radius: 10px;
+  background-color: #333;
+}
+  .message.mine {
+    text-align: right;
+  }
+  .message span {
+    display: block;
+    padding-left: 6px;
+  }
+    .message span:first-child {
+      font-size: 11px;
+    }
+
+@media screen and (max-width: 600px) {
+  .container {
+    width: calc(100% - 40px);
+  }
+}

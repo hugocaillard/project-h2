@@ -1,6 +1,8 @@
 import http from 'http';
 import colors from 'colors';
 
+import socketio from 'socket.io';
+
 import staticServe from './lib/helpers/static.js';
 
 function handler(req, res) {
@@ -17,6 +19,12 @@ function handler(req, res) {
 }
 
 var app = http.createServer(handler);
+
+var io = socketio(app);
+io.on('connection', function(socket) {
+  console.log('user connected');
+});
+
 
 app.listen(3000, () => {
   console.log('Server running at localhost:3000/'.underline);

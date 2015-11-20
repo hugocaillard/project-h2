@@ -5,6 +5,9 @@ var $ = {
 };
 
 var socket = io('http://localhost:3000');
+socket.on('connected', function(data) {
+  console.log(data);
+});
 
 var $name = $.sel('#name');
 var $content = $.sel('#content');

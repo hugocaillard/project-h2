@@ -17,7 +17,16 @@ io.on('connection', function(socket) {
   socket.emit('connected', {status: 'Success'});
 
   socket.on('newMessage', function(data) {
-    socket.broadcast.emit('message', data);
+    data.content = data.content.replace(/<|>/gi, '');
+    data.name = data.name.replace(/<|>/gi, '');
+    if (data.name.length > 2 && data.name.length < 10 &&
+       data.content.length > 2 && data.content.length < 100) {
+      socket.broadcast.emit('message', data);
+    }
+  });
+
+  socket.on('typing', function(data) {
+    socket.broadcast.emit('someoneIsTyping');
   });
 });
 

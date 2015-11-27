@@ -49,6 +49,10 @@ input {
       font-size: 11px;
     }
 
+.hidden {
+  opacity: 0;
+}
+
 @media screen and (max-width: 600px) {
   .container {
     width: calc(100% - 40px);

@@ -4,11 +4,9 @@ import colors from 'colors';
 import socketio from 'socket.io';
 
 import staticServe from './lib/helpers/static.js';
+import messages from './lib/messages.js';
 
 function handler(req, res) {
-  console.log(req.method);
-  console.log(req.url);
-
   if (req.url === '/api') {
     res.write('Hello world');
   } else if (req.url === '/api/home') {
@@ -22,17 +20,15 @@ var app = http.createServer(handler);
 
 var io = socketio(app);
 io.on('connection', function(socket) {
-  console.log('user connected');
-  socket.emit('connected', {status: 'Welcome!!!!'});
+  socket.emit('connected', {messages: messages.all.slice(-10)});
 
   socket.on('messageClient', function(data) {
-    console.log(data)
-    if (data.name && data.name.length > 1 && data.content && data.content.length < 100) {
-    socket.broadcast.emit('messageServer', data);
-    }
+    messages.create(data, function(err, data) {
+      console.log(data);
+      socket.broadcast.emit('messageServer', data);
+    });
   });
 });
-
 
 app.listen(3000, () => {
   console.log('Server running at localhost:3000/'.underline);

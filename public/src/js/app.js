@@ -8,7 +8,6 @@ var $name = document.querySelector('#name');
 var $content = document.querySelector('#content');
 var name = '';
 
-console.log($name.value);
 
 $name.addEventListener('input', function() {
   name = this.value;
@@ -19,6 +18,12 @@ $content.addEventListener('keyup', function(e) {
     // ENVOYER LE MESSAGE
     this.value = '';
   }
+});
+
+var socket = io(document.baseURI);
+
+socket.on('connected', function(data) {
+  console.log(data);
 });
 
 

@@ -1,11 +1,26 @@
-var $ = {
-  sel: function(el) {
-    return document.querySelector(el);
-  }
-};
+// var $ = {
+//   sel: function(el) {
+//     return document.querySelector(el);
+//   }
+// };
 
-var $msgContainer = $.sel('.messages');
-console.log($msgContainer);
+var $name = document.querySelector('#name');
+var $content = document.querySelector('#content');
+var name = '';
+
+console.log($name.value);
+
+$name.addEventListener('input', function() {
+  name = this.value;
+});
+
+$content.addEventListener('keyup', function(e) {
+  if (e.keyCode === 13) {
+    // ENVOYER LE MESSAGE
+    this.value = '';
+  }
+});
+
 
 // function displayMessage(msg) {
 //   var $name = document.createElement('span')

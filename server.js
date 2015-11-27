@@ -1,12 +1,15 @@
-import http from 'http';
-import colors from 'colors';
+'use strict';
 
-import staticServe from './lib/helpers/static.js';
+const http = require('http');
+const colors = require('colors');
+
+const staticServe = require('./lib/helpers/static.js');
 
 let app = http.createServer(function (req, res) {
+  console.log(req.url)
   staticServe(req, res, './public');
 });
 
-app.listen(3000, () => {
+app.listen(3000, function () {
   console.log('Server running at localhost:3000/'.underline);
 });

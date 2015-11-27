@@ -15,6 +15,10 @@ var io = socketio(app);
 io.on('connection', function(socket) {
   console.log('USER CONNECTED')
   socket.emit('connected', {status: 'Success'});
+
+  socket.on('newMessage', function(data) {
+    socket.broadcast.emit('message', data);
+  });
 });
 
 

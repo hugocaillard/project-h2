@@ -1,15 +1,26 @@
-'use strict';
+import http from 'http';
+import socketio from 'socket.io';
+import colors from 'colors';
 
-const http = require('http');
-const colors = require('colors');
+import router from './lib/helpers/router';
+import staticServe from './lib/helpers/static';
+import resFormatter from './lib/helpers/resFormatter.js';
 
-const staticServe = require('./lib/helpers/static.js');
+router.prefix = '/api';
+require('./lib/routes.js');
 
-let app = http.createServer(function (req, res) {
-  console.log(req.url)
-  staticServe(req, res, './public');
-});
+const handler = (req, res) => {
+  resFormatter.format(res);
+  router.on(req, res);
+  if (!req.url.startsWith(router.prefix))
+    staticServe(req, res, './public');
+};
 
-app.listen(3000, function () {
+let app = http.createServer(handler);
+
+import sh from './lib/socketsHandler.js';
+sh.init(socketio(app));
+
+app.listen(3000, () => {
   console.log('Server running at localhost:3000/'.underline);
 });

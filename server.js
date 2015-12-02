@@ -20,11 +20,10 @@ var app = http.createServer(handler);
 
 var io = socketio(app);
 io.on('connection', function(socket) {
-  socket.emit('connected', {messages: messages.all.slice(-10)});
+  socket.emit('connected', messages.get(20));
 
   socket.on('messageClient', function(data) {
     messages.create(data, function(err, data) {
-      console.log(data);
       socket.broadcast.emit('messageServer', data);
     });
   });
